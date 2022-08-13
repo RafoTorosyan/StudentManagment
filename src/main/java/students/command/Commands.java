@@ -10,6 +10,7 @@ public interface Commands {
     int CHANGE_STUDENT_LESSON = 6;
     int ADD_LESSON = 7;
     int PRINT_ALL_LESSONS = 8;
+    int DOWNLOAD_STUDENTS_EXCEL = 9;
 
     int EXIT = 0;
     int LOGIN = 1;
@@ -25,6 +26,7 @@ public interface Commands {
         System.out.println("please input " + CHANGE_STUDENT_LESSON + " for change student's lesson");
         System.out.println("please input " + ADD_LESSON + " for add lesson");
         System.out.println("please input " + PRINT_ALL_LESSONS + " for print all lessons");
+        System.out.println("please input " + DOWNLOAD_STUDENTS_EXCEL  + " for download students exel");
 
     }
 
@@ -35,6 +37,7 @@ public interface Commands {
         System.out.println("please input " + PRINT_STUDENTS_BY_LESSON + " for print student by lesson");
         System.out.println("please input " + PRINT_STUDENT_COUNT + " for print students count");
         System.out.println("please input " + PRINT_ALL_LESSONS + " for print all lessons");
+        System.out.println("please input " + DOWNLOAD_STUDENTS_EXCEL  + " for download students exel");
 
     }
 

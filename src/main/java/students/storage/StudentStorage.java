@@ -1,6 +1,16 @@
 package students.storage;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import students.model.Student;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class StudentStorage {
 
@@ -55,5 +65,42 @@ public class StudentStorage {
             return null;
         }
         return array[index];
+    }
+
+    public void writeStudentsToExcel(String fileDir) throws IOException, InvalidFormatException {
+        File directory = new File(fileDir);
+        if (directory.isFile()) {
+            throw new RuntimeException("fileDir must be a directory");
+        }
+        File excelFile = new File(directory, "Student_" + System.currentTimeMillis() + ".xlsx");
+        excelFile.createNewFile();
+        Workbook workbook = new XSSFWorkbook(excelFile);
+        Sheet sheet = workbook.createSheet("students");
+        Row headerRow = sheet.createRow(0);
+
+        Cell nameCell = headerRow.createCell(0);
+        nameCell.setCellValue("name");
+
+        Cell surnameCell = headerRow.createCell(1);
+        surnameCell.setCellValue("surname");
+
+        Cell ageCell = headerRow.createCell(2);
+        ageCell.setCellValue("age");
+
+        Cell phoneCell = headerRow.createCell(3);
+        phoneCell.setCellValue("phone");
+
+        for (int i = 0; i < size; i++) {
+            Student student = array[i];
+            Row row = sheet.createRow(i + 1);
+            row.createCell(0).setCellValue(student.getName());
+            row.createCell(1).setCellValue(student.getSurname());
+            row.createCell(2).setCellValue(student.getAge());
+            row.createCell(3).setCellValue(student.getPhoneNumber());
+
+        }
+        workbook.write(new FileOutputStream(excelFile));
+        System.out.println("Excel was created successfully");
+
     }
 }

@@ -1,5 +1,7 @@
 package students;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Workbook;
 import students.command.Commands;
 import students.exception.LessonNotFoundException;
 import students.model.Lesson;
@@ -10,6 +12,7 @@ import students.storage.LessonStorage;
 import students.storage.StudentStorage;
 import students.storage.UserStorage;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -105,10 +108,23 @@ public class StudentDemo implements Commands {
                 case PRINT_ALL_LESSONS:
                     lessonStorage.print();
                     break;
+                case DOWNLOAD_STUDENTS_EXCEL:
+                    downloadStudentsExcel();
+                    break;
                 default:
                     System.out.println("Invalid command");
             }
 
+        }
+    }
+
+    private static void downloadStudentsExcel()  {
+        System.out.println("Please input file location");
+        String fileDir = scanner.nextLine();
+        try {
+            studentStorage.writeStudentsToExcel(fileDir);
+        } catch (IOException | InvalidFormatException e) {
+            e.printStackTrace();
         }
     }
 
@@ -174,6 +190,9 @@ public class StudentDemo implements Commands {
                     break;
                 case PRINT_ALL_LESSONS:
                     lessonStorage.print();
+                    break;
+                case DOWNLOAD_STUDENTS_EXCEL:
+                    downloadStudentsExcel();
                     break;
                 default:
                     System.out.println("Invalid command");
